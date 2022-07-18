@@ -1,7 +1,7 @@
 import {ServicioVehiculo} from '../services/ServicioVehiculo.js'
-import {servicioCelda} from '../services/ServicioCelda.js'
+import {ServicioCelda} from '../services/ServicioCelda.js'
 
-class ControladorVehiculo{
+export class ControladorVehiculo{
 
     
 
@@ -44,7 +44,7 @@ class ControladorVehiculo{
     async editarVehiculo(request,response){
 
         let servicioVehiculo=new ServicioVehiculo()
-        let servicioCelda=new ServicioCelda()
+        let servicioCelda=new servicioCelda()
         try{
             let id=request.params.id
             let datos=request.body
@@ -66,7 +66,9 @@ class ControladorVehiculo{
             //restar las 2 fechas y obtener la diferencia de tiempo en minutos
             let diferencia=fechaSalida.getTime()-fechaEntrada.getTime()
             let diferenciaEnSegundos=diferencia/1000 //porque son mil milisegundos
-            let diferenciaEnMinutos=diferenciaEnSegundos/60
+            let diferenciaEnMinutos=Math.round(diferenciaEnMinutos/60)
+            datos.minutos=diferenciaEnMinutos
+            
 
             //calculamos el costo del parqueadero
             let costo=diferenciaEnMinutos*tarifa
